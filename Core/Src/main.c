@@ -26,7 +26,6 @@
 /* USER CODE BEGIN Includes */
 #include "app_control.h"
 #include "app_lcd.h"
-// #include "app_bluetooth.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,12 +99,9 @@ int main(void)
   AppLcd_Init();
   AppKey_Init();
 
-  /* 蓝牙：启动 USART2 单字节中断接收 */
-//   AppBluetooth_Init();
 
-  /* 启动 Buck 控制：开环由 TIM1 中断直接使用 openloop_command；
-     四种模式均采ADC供观察；闭环给定0时停PWM，正给定且采样有效时自动运行。
-     PB0(PWM_EN) 与 TIM1 主输出统一由控制中断使能。 */
+
+  /* 第二版四路采样启动，默认停机。按键长按启停，短按选模式/调电流。 */
   BuckControl_Start();
   /* USER CODE END 2 */
 
@@ -116,16 +112,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    if (AppKey_PollPressed() != 0U)
-      BuckControl_KeyPressed();
+    BuckControl_KeyEvent(AppKey_PollEvent());
 
     AppLcd_Update();
 
-    /* 蓝牙命令解析（不在中断中执行） */
-//     AppBluetooth_Parse();
 
-    /* 遥测绘图数据输出（不在中断中执行） */
-//     AppBluetooth_SendPlot();
+
+
   }
   /* USER CODE END 3 */
 }
@@ -177,7 +170,7 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 /**
-  * @brief  ADC DMA 两个 Rank 全部搬运完成回调
+  * @brief  ADC DMA 四个 Rank 全部搬运完成回调
   * @param  hadc ADC 句柄
   */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
@@ -205,7 +198,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   */
 // void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 // {
-//   AppBluetooth_RxCplt(huart);
 // }
 /* USER CODE END 4 */
 
@@ -216,6 +208,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
+  BuckControl_EmergencyStop(7U);
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)

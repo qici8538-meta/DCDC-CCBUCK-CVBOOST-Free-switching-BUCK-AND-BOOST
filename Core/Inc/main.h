@@ -57,22 +57,26 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define SAMPLE_REF_Pin GPIO_PIN_0
+#define SAMPLE_REF_GPIO_Port GPIOC
+#define SAMPLE_VBUS_Pin GPIO_PIN_1
+#define SAMPLE_VBUS_GPIO_Port GPIOC
 #define SAMPLE_I_Pin GPIO_PIN_0
 #define SAMPLE_I_GPIO_Port GPIOA
-#define SAMPLE_V_Pin GPIO_PIN_1
-#define SAMPLE_V_GPIO_Port GPIOA
+#define SAMPLE_VBAT_Pin GPIO_PIN_1
+#define SAMPLE_VBAT_GPIO_Port GPIOA
 #define PWM_EN_Pin GPIO_PIN_0
 #define PWM_EN_GPIO_Port GPIOB
-#define Key_Pin GPIO_PIN_15
-#define Key_GPIO_Port GPIOD
-#define PWM_IN_Pin GPIO_PIN_8
-#define PWM_IN_GPIO_Port GPIOA
 #define LCD_CS_Pin GPIO_PIN_11
 #define LCD_CS_GPIO_Port GPIOD
 #define LCD_DC_Pin GPIO_PIN_12
 #define LCD_DC_GPIO_Port GPIOD
 #define LCD_BL_Pin GPIO_PIN_13
 #define LCD_BL_GPIO_Port GPIOD
+#define Key_Pin GPIO_PIN_15
+#define Key_GPIO_Port GPIOD
+#define PWM_IN_Pin GPIO_PIN_8
+#define PWM_IN_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

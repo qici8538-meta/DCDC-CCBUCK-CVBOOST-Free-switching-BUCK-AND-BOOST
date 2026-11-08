@@ -41,7 +41,7 @@ void MX_GPIO_Init(void);
 /* USER CODE BEGIN Prototypes */
 
 void AppKey_Init(void);
-uint8_t AppKey_PollPressed(void);
+uint8_t AppKey_PollEvent(void);
 
 /* USER CODE END Prototypes */
 
