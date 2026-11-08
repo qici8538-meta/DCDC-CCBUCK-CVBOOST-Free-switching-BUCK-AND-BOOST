@@ -1,0 +1,1 @@
+LIVE_REF_ADC_NATIVE_OK: 4-rank mapping, zero, gain, charge/discharge, REF drift, snapshot.

@@ -1,0 +1,313 @@
+
+Simulink Agentic Toolkit - Installation Check
+===============================================
+
+Prerequisites
+  ✓ MATLAB 23.2.0.2365128 (R2023b)
+  ✓ Simulink installed and licensed
+
+MATLAB Environment
+  ✓ All 8 tool entry points on path
+  ✓ Package resolution correct (+sage, +mbd inside SATK)
+
+MCP Server
+  ✓ matlab-mcp-server.exe found: C:\Users\STM332Dev\.matlab\agentic-toolkits\bin\matlab-mcp-server.exe
+
+MCP Connectivity
+  ✓ shareMATLABSession available (MATLAB-side MCP components installed)
+  ✓ MATLAB connector running (port 31515)
+
+===============================================
+Result: PASS
+
+      case       set_A    actual_A    error_percent    pass_5percent
+    _________    _____    ________    _____________    _____________
+
+    {'CC_10'}       1     0.99967       0.033447           true     
+    {'CC_11'}     1.1      1.0993       0.060947           true     
+    {'CC_12'}     1.2      1.1998       0.019916           true     
+    {'CC_13'}     1.3      1.2996       0.029136           true     
+    {'CC_14'}     1.4      1.3998       0.016061           true     
+    {'CC_15'}     1.5      1.4998        0.01503           true     
+    {'CC_16'}     1.6      1.5997       0.020436           true     
+    {'CC_17'}     1.7      1.6997       0.017572           true     
+    {'CC_18'}     1.8      1.7997       0.015757           true     
+    {'CC_19'}     1.9      1.8996       0.023534           true     
+    {'CC_20'}       2      1.9997       0.014018           true     
+
+    I24_A     I30_A     I36_A     variation_percent    pass_1percent
+    ______    ______    ______    _________________    _____________
+
+    1.9997    1.9997    1.9997        0.0007553            true     
+
+    battery_V    LC_multiplier    bus_max_error_V_after_start    inductor_peak_A    fault
+    _________    _____________    ___________________________    _______________    _____
+
+      15.5            0.8                   0.10072                  2.0088           0  
+      15.5            1.2                  0.082366                  2.0031           0  
+        18            0.8                   0.20547                  2.2859           0  
+        18            1.2                  0.077508                  1.8997           0  
+        21            0.8                   0.28606                  2.7158           0  
+        21            1.2                  0.070624                  1.3326           0  
+
+    current_max_error_percent: 0.0609
+       line_variation_percent: 7.5530e-04
+            boost_max_error_V: 0.0133
+        auto_ramp_max_error_V: 0.0775
+        auto_step_max_error_V: 0.4152
+            overcharge_trip_V: 24.0016
+            overcharge_trip_s: 0.2901
+           automatic_charge_A: 0.7743
+        automatic_discharge_A: -1.3419
+
+                   check                    pass 
+    ____________________________________    _____
+
+    {'24V overcharge latch'            }    true 
+    {'no automatic restart'            }    true 
+    {'manual OFF clears after recovery'}    true 
+    {'overcurrent -2.81 A'             }    true 
+    {'overcurrent 2.81 A'              }    true 
+    {'battery undervoltage'            }    true 
+    {'bus overvoltage'                 }    true 
+    {'invalid command'                 }    true 
+
+    mode    battery_A    bus_max_error_V    fault    inductor_peak_A
+    ____    _________    _______________    _____    _______________
+
+     1        1.9706               0          0          2.3688     
+     2       -1.7565        0.022523          0           2.213     
+     3       -0.2778        0.061461          0          1.9406     
+
+MATLAB_SIMULATION_OK
+AUTO2_PROPOSAL 1 旧AUTO2 min 28.559826 max 31.445988 fault 0
+AUTO2_PROPOSAL 2 仅提高PI min 29.103618 max 30.987654 fault 0
+AUTO2_PROPOSAL 3 偏激外环候选 min 29.628575 max 30.348647 fault 0
+AUTO2_PROPOSAL 4 所选AUTO2 min 29.584772 max 30.400860 fault 0
+AUTO2_CORNER Eb15.5_L0.8_C0.8 error 0.468198 fault 0
+AUTO2_CORNER Eb15.5_L0.8_C1 error 0.410352 fault 0
+AUTO2_CORNER Eb15.5_L0.8_C1.2 error 0.373669 fault 0
+AUTO2_CORNER Eb15.5_L1_C0.8 error 0.609314 fault 0
+AUTO2_CORNER Eb15.5_L1_C1 error 0.538516 fault 0
+AUTO2_CORNER Eb15.5_L1_C1.2 error 0.484108 fault 0
+AUTO2_CORNER Eb15.5_L1.2_C0.8 error 0.763684 fault 0
+AUTO2_CORNER Eb15.5_L1.2_C1 error 0.671835 fault 0
+AUTO2_CORNER Eb15.5_L1.2_C1.2 error 0.602679 fault 0
+AUTO2_CORNER Eb18_L0.8_C0.8 error 0.457568 fault 0
+AUTO2_CORNER Eb18_L0.8_C1 error 0.385575 fault 0
+AUTO2_CORNER Eb18_L0.8_C1.2 error 0.347226 fault 0
+AUTO2_CORNER Eb18_L1_C0.8 error 0.479345 fault 0
+AUTO2_CORNER Eb18_L1_C1 error 0.415228 fault 0
+AUTO2_CORNER Eb18_L1_C1.2 error 0.381732 fault 0
+AUTO2_CORNER Eb18_L1.2_C0.8 error 0.593763 fault 0
+AUTO2_CORNER Eb18_L1.2_C1 error 0.520364 fault 0
+AUTO2_CORNER Eb18_L1.2_C1.2 error 0.469161 fault 0
+AUTO2_CORNER Eb21_L0.8_C0.8 error 0.415558 fault 0
+AUTO2_CORNER Eb21_L0.8_C1 error 0.355794 fault 0
+AUTO2_CORNER Eb21_L0.8_C1.2 error 0.323641 fault 0
+AUTO2_CORNER Eb21_L1_C0.8 error 0.446077 fault 0
+AUTO2_CORNER Eb21_L1_C1 error 0.391925 fault 0
+AUTO2_CORNER Eb21_L1_C1.2 error 0.352802 fault 0
+AUTO2_CORNER Eb21_L1.2_C0.8 error 0.487312 fault 0
+AUTO2_CORNER Eb21_L1.2_C1 error 0.417151 fault 0
+AUTO2_CORNER Eb21_L1.2_C1.2 error 0.385033 fault 0
+AUTO2_SWITCH 标称_相位0 min 29.564617 max 30.405909 error 0.435383 fault 0
+AUTO2_SWITCH 标称_相位半周期 min 29.557346 max 30.417167 error 0.442654 fault 0
+AUTO2_SWITCH 标称_相位四分之一周期 min 29.556486 max 30.411931 error 0.443514 fault 0
+AUTO2_SWITCH 平均模型最差角_开关复核 min 29.210178 max 30.719721 error 0.789822 fault 0
+AUTO2_TRANSIENT_VERIFIED: nominal_max_error=0.443514 V, corners_all_pass=0
+    scheme    max_mean_error_percent    max_display_error_percent
+    ______    ______________________    _________________________
+
+      1               6.0144                       6.5           
+      2               0.4816                         2           
+
+    corner    postcal_5V_change_V    mean_error_at1A_percent    worst_display_error_percent
+    ______    ___________________    _______________________    ___________________________
+
+      1                 0                    0.27868                         1             
+      1              0.01                    0.27754                         1             
+      1              0.03                    0.26648                         1             
+      2                 0                    0.45936                         2             
+      2              0.01                    0.45651                         1             
+      2              0.03                    0.45262                         2             
+      3                 0                    0.28804                         1             
+      3              0.01                    0.29262                         1             
+      3              0.03                     0.2878                         1             
+      4                 0                    0.49075                         1             
+      4              0.01                    0.47565                         2             
+      4              0.03                    0.47386                         1             
+
+CURRENT_MEASUREMENT_COMPARISON_OK; synthetic calibration is not bench calibration.
+    set_A    cycle_mean_true_A    display_min_A    display_max_A    cycle_mean_control_error_percent    worst_display_error_percent    pass_control_5percent    pass_display_2percent
+    _____    _________________    _____________    _____________    ________________________________    ___________________________    _____________________    _____________________
+
+      1           0.99383             0.99               1                      0.61699                           0.62082                      true                     true         
+      2            1.9936             1.99               2                      0.31869                           0.31971                      true                     true         
+
+SWITCH_WAVE_CURRENT_DISPLAY_OK
+[警告: Selected C compiler is incompatible with C99 (ISO) language standard. Code generation will switch to C89/90 (ANSI) instead. Consider changing C compiler or
+target language setting to suppress this warning.] 
+[警告: 编译过程使用的是 LCC 编译器，该编译器已弃用，将在以后的版本中删除。请考虑选择其他编译器工具链。有关支持的编译器的信息，请参阅 <a
+href="https://www.mathworks.com/support/compilers">https://www.mathworks.com/support/compilers</a>。] 
+代码生成成功。
+
+C_GENERATION_OK: D:\ -- DCDC_Controlor\仿真\生成代码
+NATIVE_C_EQUIVALENCE: samples=20000 max_abs_error=0 state_equal=1
+    assumed_L_DCR_ohm    assumed_other_loss_W    switch_model_input_W    switch_model_output_W    estimated_total_loss_W    estimated_efficiency_percent    estimate_ge_95percent
+    _________________    ____________________    ____________________    _____________________    ______________________    ____________________________    _____________________
+
+          0.05                   0.2                    30.57                    30.02                   0.44562                       98.537                       true         
+          0.05                   0.8                    30.57                    30.02                    1.0456                       96.634                       true         
+          0.15                   0.2                    30.57                    30.02                   0.75048                       97.561                       true         
+          0.15                   0.8                    30.57                    30.02                    1.3505                       95.695                       true         
+           0.3                   0.2                    30.57                    30.02                    1.2078                       96.132                       true         
+           0.3                   0.8                    30.57                    30.02                    1.8078                        94.32                       false        
+           0.5                   0.2                    30.57                    30.02                    1.8175                       94.291                       false        
+           0.5                   0.8                    30.57                    30.02                    2.4175                       92.547                       false        
+
+95% loss budget at 30 W: 1.578947 W. No measured-efficiency claim.
+ALL_OFFLINE_CHECKS_OK; generated C copied to Core/Generated.
+Build with Keil; firmware is not flashed by this script.
+Scope: basic (1) through (5), advanced (1)(2).
+    Kp_duty_per_V    Ki_duty_per_Vs    steady_max_error_V    settling_s    inductor_peak_A    fault    score 
+    _____________    ______________    __________________    __________    _______________    _____    ______
+
+        0.004             0.06               0.05359           0.1918          1.7684           0      1.9716
+        0.004              0.2              0.043711          0.11707          1.8266           0      1.2144
+        0.004              0.6              0.032609          0.11552          1.8358           0      1.1878
+        0.008             0.06               0.21824          0.24614          1.7657           0      2.6797
+        0.008              0.2              0.021668          0.11827          1.8128           0      1.2044
+        0.008              0.6              0.021668          0.11547          1.8375           0      1.1764
+        0.012             0.06               0.34102          0.26924          1.7587           0      3.0334
+        0.012              0.2              0.015597          0.11887           1.795           0      1.2043
+        0.012              0.6              0.010616          0.11557          1.8345           0      1.1663
+         0.02             0.06               0.38507          0.25784          1.7581           0      2.9635
+         0.02              0.2              0.038277          0.11907          1.7945           0       1.229
+         0.02              0.6             0.0044698          0.11587          1.8276           0      1.1632
+
+    I_Kp    I_Ki    V_Kp    V_Ki    current_slew_Aps    auto_step_error_V    inductor_peak_A    fault    score 
+    ____    ____    ____    ____    ________________    _________________    _______________    _____    ______
+
+    0.03     12     0.35     35            100               4.1631              1.6247           0      4.1631
+    0.03     12      0.5     50            300               3.1464              1.8155           0      3.1464
+    0.04     16      0.5     50            500               2.7429              1.8527           0      2.7429
+    0.04     16      0.7     70           1000               2.1293              1.8553           0      2.1293
+    0.05     20      0.7     70           1000               2.0293              1.8871           0      2.0293
+    0.05     25        1    100           2000                1.543              1.9161           0       1.543
+    0.06     30        1    100           3000               1.4982              1.8407           0      1.4982
+    0.04     16      1.2    120           3000               1.4469              1.8541           0      1.4469
+
+    half_band_V    auto_ramp_error_V    inductor_peak_A    fault    mode_changes     score 
+    ___________    _________________    _______________    _____    ____________    _______
+
+       0.05              0.3466             1.3696           0          426         0.35086
+        0.1             0.39575             1.3718           0          292         0.39867
+       0.15              0.4528             1.3716           0          238         0.45518
+        0.2              0.4684              1.372           0          202         0.47042
+
+CANDIDATE_TUNING_OK
+CC comparison scheme 1 complete
+CC comparison scheme 2 complete
+CV comparison scheme 1 complete
+CV comparison scheme 2 complete
+AUTO comparison scheme 1 complete
+AUTO comparison scheme 2 complete
+Alternative switching model 1 complete
+Alternative switching model 2 complete
+Alternative switching model 3 complete
+    scheme     I24_A     I30_A     I36_A     variation_percent
+    _______    ______    ______    ______    _________________
+
+    {'CC1'}    1.9997    1.9997    1.9998        0.0012819    
+    {'CC2'}    1.9997    1.9997    1.9997        0.0007553    
+
+    scheme           test          max_current_error_A    inductor_peak_A    settling_after_last_change_s    fault
+    _______    ________________    ___________________    _______________    ____________________________    _____
+
+    {'CC1'}    {'current_step'}           1.0009              2.0017                  0.0044137                0  
+    {'CC1'}    {'line_step'   }                2              3.8154                        NaN                3  
+    {'CC2'}    {'current_step'}           1.0009              2.0017                  0.0022642                0  
+    {'CC2'}    {'line_step'   }          0.58151              2.7066                  0.0011056                0  
+
+    scheme     test    battery_V    late_max_error_V    max_error_after_220ms_V    settling_from_start_s    inductor_peak_A    fault
+    _______    ____    _________    ________________    _______________________    _____________________    _______________    _____
+
+    {'CV1'}     1          18          0.0044698               0.0046219                  0.11587               1.8276           0  
+    {'CV1'}     2          18           0.010716                 0.62171                  0.25204               1.8276           0  
+    {'CV1'}     3        15.5          0.0090795               0.0091388                  0.14082               2.1621           0  
+    {'CV2'}     1          18           0.013315                0.034482                  0.11577               1.9047           0  
+    {'CV2'}     2          18           0.019718                 0.13291                  0.11577               1.9047           0  
+    {'CV2'}     3        15.5            0.01566                0.043162                  0.14087               2.1983           0  
+
+     scheme      test    battery_V    max_bus_error_V    charge_max_A    discharge_min_A    inductor_peak_A    mode_changes    fault
+    _________    ____    _________    _______________    ____________    _______________    _______________    ____________    _____
+
+    {'AUTO1'}     1          18            0.3466          0.87018           -1.3419            1.3696             426           0  
+    {'AUTO1'}     2          18           0.71647          0.89888           -1.5322            1.5752             140           0  
+    {'AUTO1'}     3        15.5           0.53667          0.93978           -1.7035            1.7732             426           0  
+    {'AUTO1'}     4          21           0.22101          0.79241           -1.1299            1.1599             436           0  
+    {'AUTO2'}     1          18          0.077542          0.77433           -1.3419             1.877               0           0  
+    {'AUTO2'}     2          18           0.41478          0.77994           -1.3446             1.877               0           0  
+    {'AUTO2'}     3        15.5           0.10072          0.90314           -1.7613            2.0105               0           0  
+    {'AUTO2'}     4          21          0.070624          0.66524           -1.1286            1.3327               0           0  
+
+    alternative    mean_battery_A    max_bus_error_V    inductor_peak_A    fault
+    ___________    ______________    _______________    _______________    _____
+
+         1              1.9706                 0            2.3687           0  
+         2              -1.757           0.01838            2.1851           0  
+         3            -0.29036             0.395            1.7372           0  
+
+SCHEME_COMPARISON_OK; candidates saved; firmware unchanged by comparison.
+Frequency 20.005 kHz CC36_ripple complete
+Frequency 20.005 kHz CV30_efficiency complete
+Frequency 20.005 kHz CC30_efficiency complete
+Frequency 40.000 kHz CC36_ripple complete
+Frequency 40.000 kHz CV30_efficiency complete
+Frequency 40.000 kHz CC30_efficiency complete
+    frequency_Hz    mode    battery_A    bus_max_error_V    inductor_ripple_pp_A    inductor_peak_A    fault    PWM_ARR      operating_point  
+    ____________    ____    _________    _______________    ____________________    _______________    _____    _______    ___________________
+
+       20005         1        1.9626             NaN              0.95971                2.479           0       4249      {'CC36_ripple'    }
+       20005         2       -1.7565        0.022523               0.8617                2.213           0       4249      {'CV30_efficiency'}
+       20005         1        1.9706             NaN              0.75051               2.3688           0       4249      {'CC30_efficiency'}
+       40000         1        1.9909             NaN              0.48327               2.2405           0       2125      {'CC36_ripple'    }
+       40000         2        -1.739        0.013902              0.46484               2.0213           0       2125      {'CV30_efficiency'}
+       40000         1        1.9929             NaN              0.37873               2.1885           0       2125      {'CC30_efficiency'}
+
+    frequency_Hz    L_DCR_ohm    transition_sum_ns    other_port_loss_W    switch_model_loss_W    gate_from_aux_estimate_W    overlap_estimate_W    port_loss_estimate_W    port_eta_estimate_percent    port_plus_gate_eta_percent      direction      model_input_W    model_output_W    required_efficiency_percent    estimate_pass
+    ____________    _________    _________________    _________________    ___________________    ________________________    __________________    ____________________    _________________________    __________________________    _____________    _____________    ______________    ___________________________    _____________
+
+       20005          0.15              160                  0.8                 0.55048                  0.058414                 0.083137                1.4336                    95.442                        95.265              {'discharge'}        30.57             30.02                    95                     true     
+       20005          0.15              160                  0.8                 0.73219                  0.058414                 0.095716                1.6279                    95.751                        95.605              {'charge'   }       37.412             36.68                    90                     true     
+       40000          0.15              160                  0.8                 0.58729                    0.1168                  0.16651                1.5538                    95.078                        94.727              {'discharge'}       30.602            30.014                    95                     true     
+       40000          0.15              160                  0.8                 0.75874                    0.1168                  0.19186                1.7506                    95.456                        95.167              {'charge'   }       37.531            36.773                    90                     true     
+
+FREQUENCY_COMPARISON_OK; no measured efficiency is claimed.
+    scheme    max_mean_error_percent    max_display_error_percent
+    ______    ______________________    _________________________
+
+      1               6.0144                       6.5           
+      2               0.4816                         2           
+
+    corner    postcal_5V_change_V    mean_error_at1A_percent    worst_display_error_percent
+    ______    ___________________    _______________________    ___________________________
+
+      1                 0                    0.27868                         1             
+      1              0.01                    0.27754                         1             
+      1              0.03                    0.26648                         1             
+      2                 0                    0.45936                         2             
+      2              0.01                    0.45651                         1             
+      2              0.03                    0.45262                         2             
+      3                 0                    0.28804                         1             
+      3              0.01                    0.29262                         1             
+      3              0.03                     0.2878                         1             
+      4                 0                    0.49075                         1             
+      4              0.01                    0.47565                         2             
+      4              0.03                    0.47386                         1             
+
+CURRENT_MEASUREMENT_COMPARISON_OK; synthetic calibration is not bench calibration.
+SCHEME_DECISION_EVIDENCE_OK. See 00_重点看/方案决策说明.pdf.
+No alternative-controller selector or candidate state is copied to firmware.
+AUTO2_FINAL_REGRESSION_OK

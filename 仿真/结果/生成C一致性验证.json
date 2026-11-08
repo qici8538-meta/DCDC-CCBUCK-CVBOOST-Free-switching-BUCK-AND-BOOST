@@ -1,0 +1,6 @@
+{
+  "samples": 20000,
+  "max_absolute_error": 0,
+  "states_equal": true,
+  "passed": true
+}

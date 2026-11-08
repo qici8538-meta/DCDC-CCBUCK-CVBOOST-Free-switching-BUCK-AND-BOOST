@@ -1,0 +1,13 @@
+{
+  "current_max_error_percent": 0.060947357526920272,
+  "line_variation_percent": 0.00075529922256594838,
+  "boost_max_error_V": 0.01331514039024384,
+  "auto_ramp_max_error_V": 0.077541698267769021,
+  "auto_step_max_error_V": 0.41522751432228944,
+  "overcharge_trip_V": 24.001561306358088,
+  "overcharge_trip_s": 0.29008171907844371,
+  "automatic_charge_A": 0.77433081841432116,
+  "automatic_discharge_A": -1.3419234927215178,
+  "current_switching_mean_error_percent": 0.61698968506955776,
+  "display_switching_error_percent": 0.62082008093174712
+}

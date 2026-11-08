@@ -1,0 +1,111 @@
+{
+  "auto2_transient": {
+    "gains": {
+      "sample_time": 4.99882335e-05,
+      "current_kp": 0.02,
+      "current_ki": 8,
+      "voltage_kp": 10,
+      "voltage_ki": 120,
+      "current_slew": 40000,
+      "voltage_slew": 100,
+      "charge_limit": 2,
+      "discharge_limit": 2.5,
+      "overcurrent": 2.8,
+      "overcharge": 24,
+      "overcharge_release": 23,
+      "battery_min": 15,
+      "battery_max": 25,
+      "bus_max": 39,
+      "duty_min": 0.05,
+      "duty_max": 0.95,
+      "current_lead_time": 0.00015,
+      "current_ff_inductance": 0.000235
+    },
+    "hardware_timing": true,
+    "source_step_V": [
+      32,
+      38,
+      32
+    ],
+    "nominal_min_V": 29.556486472665345,
+    "nominal_max_V": 30.41716722260989,
+    "nominal_max_error_V": 0.4435135273346553,
+    "nominal_all_pass": true,
+    "nominal_max_settled_current_std_A": 0.020679276769500883,
+    "nominal_max_settled_ref_std_A": 0.053500599307431985,
+    "corner_all_pass": false,
+    "corner_max_error_V": 0.7636835237309789,
+    "worst_corner_switch_pass": false,
+    "worst_corner_switch_error_V": 0.7898223107688835,
+    "baseline_error_V": 1.4459881747831318,
+    "PI_only_error_V": 0.9876536341439568,
+    "rejected_Kpv14_current_std_A": 0.22515485396310836,
+    "rejected_Kpv14_ref_std_A": 0.551466686148376,
+    "all_ADC_inputs_quantized": true,
+    "hardware_flashed": false
+  },
+  "archive_sha256": "36AE2BE2309EECD10FFC11704B263FD11C52101B7A472AFD2E483142E013D583",
+  "archive_unchanged": true,
+  "generated_C_and_headers_match": {
+    "dcdc_step.c": true,
+    "dcdc_step.h": true,
+    "dcdc_step_types.h": true,
+    "rtGetInf.c": true,
+    "rtGetInf.h": true,
+    "rtGetNaN.c": true,
+    "rtGetNaN.h": true,
+    "rtwtypes.h": true,
+    "rt_nonfinite.c": true,
+    "rt_nonfinite.h": true
+  },
+  "project_source_paths_exist": true,
+  "matlab_final_log_success": true,
+  "hardware_flashed": false,
+  "axf_sha256": "9F2936BBC297C551048DFA90A88712A1A55CACDD6AE8748C3E90903063B707AC",
+  "hex_sha256": "423A1A376C844181199AE2A16987A411321090249D160EC9C43BC9B1DA91FA2D",
+  "keil_errors": 0,
+  "keil_warnings": 0,
+  "binary_newer_than_sources": true,
+  "scope": {
+    "basic": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "advanced": [
+      1,
+      2
+    ]
+  },
+  "physical_efficiency_measured": false,
+  "bench_ADC_calibration_performed": false,
+  "adc_channels": 4,
+  "adc_scan_order": [
+    "PA0 I",
+    "PC0 REF",
+    "PA1 VBAT",
+    "PC1 VBUS"
+  ],
+  "feedback_raw_order": [
+    "I",
+    "VBAT",
+    "VBUS",
+    "REF"
+  ],
+  "live_REF_subtraction": true,
+  "nominal_current_scale_A_per_V": 2.017,
+  "nominal_voltage_ratio": 15,
+  "INA213_input_resistor_each_ohm": 10,
+  "cubemx_generation_verified": true,
+  "matlab_log": "AUTO2突变MATLAB验证日志.txt",
+  "firmware_sources": {
+    "BUCKG474VET6.ioc": "2909983A86B7BBA78D6AED83C332B5C784C4961292E8CCE90F28785800F0794C",
+    "Core/Src/adc.c": "9B9E5FEB7D9E907D747AFA14C505B2E9E8D0963EF6DDB8BFC44581F98705F44F",
+    "Core/Src/app_adc.c": "4E8110FD8B2FFA9228F0F87BFBAAC28694A8F5A34FECC9EF8C1E371BFA1B846C",
+    "Core/Src/app_control.c": "95C26F51630D11F8343419D7C6243D45AFD93E36370AD6A91791FE52EC1FECE3",
+    "Core/Inc/adc_calibration.h": "AC8348C7CE950F80BA3D840B3750E0DF60FBEC8C1E1E85146ACF0C8E8D2DCEEF",
+    "Core/Inc/control_settings.h": "8E2167717B1692A6EE283618D1297EF7E474A13BF456B2278095015B8AF644BA"
+  }
+}

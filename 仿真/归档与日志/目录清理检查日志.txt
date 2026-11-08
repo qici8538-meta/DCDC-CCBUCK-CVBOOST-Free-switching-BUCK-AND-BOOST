@@ -1,0 +1,23 @@
+
+Simulink Agentic Toolkit - Installation Check
+===============================================
+
+Prerequisites
+  ✓ MATLAB 23.2.0.2365128 (R2023b)
+  ✓ Simulink installed and licensed
+
+MATLAB Environment
+  ✓ All 8 tool entry points on path
+  ✓ Package resolution correct (+sage, +mbd inside SATK)
+
+MCP Server
+  ✓ matlab-mcp-server.exe found: C:\Users\STM332Dev\.matlab\agentic-toolkits\bin\matlab-mcp-server.exe
+
+MCP Connectivity
+  ✓ shareMATLABSession available (MATLAB-side MCP components installed)
+  ✓ MATLAB connector running (port 31515)
+
+===============================================
+Result: PASS
+
+CLEAN_DIRECTORY_ENTRYPOINTS_OK

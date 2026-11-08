@@ -1,0 +1,9 @@
+check,pass
+24V overcharge latch,1
+no automatic restart,1
+manual OFF clears after recovery,1
+overcurrent -2.81 A,1
+overcurrent 2.81 A,1
+battery undervoltage,1
+bus overvoltage,1
+invalid command,1

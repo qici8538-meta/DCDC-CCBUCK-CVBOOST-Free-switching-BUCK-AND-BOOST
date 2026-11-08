@@ -1,0 +1,115 @@
+{
+  "scope": {
+    "basic": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "advanced": [
+      1,
+      2
+    ]
+  },
+  "selected": {
+    "basic_1_2": "CC2_voltage_ratio_feedforward_current_PI",
+    "basic_3": "20.0047kHz_synchronous_BUCK",
+    "basic_4": "two_point_current_calibration_IIR_LCD_0p01A",
+    "basic_5": "24V_latched_stop_manual_reset",
+    "advanced_1_voltage": "CV2_voltage_current_cascade",
+    "advanced_1_frequency": "20.0047kHz_ARR4249",
+    "advanced_2": "AUTO2_continuous_signed_current_cascade"
+  },
+  "human_PI_gains": {
+    "DCDC_CURRENT_KP": 0.02,
+    "DCDC_CURRENT_KI": 8.0,
+    "DCDC_VOLTAGE_KP": 10.0,
+    "DCDC_VOLTAGE_KI": 120.0
+  },
+  "updated_date": "2026-11-01",
+  "INA213_input_resistor_each_ohm": 10,
+  "nominal_current_scale_A_per_V": 2.017,
+  "firmware_current_scale_A_per_V": 2.017,
+  "current_slew_A_per_s": 40000.0,
+  "code_source": "D:\\ -- DCDC_Controlor\\仿真\\程序\\dcdc_step.m",
+  "code_source_sha256": "80CFC47BA4F389DBE1DDAE3CDAE8B83FB31DEEEDA163F8FBEF78D5881262EE10",
+  "simulation_parameters_sha256": "2C5DF177E3D1B0FBD53B65BAADC9036D45FA13709B0EA6A696B99E7440C8625B",
+  "default_header_sha256": "8E2167717B1692A6EE283618D1297EF7E474A13BF456B2278095015B8AF644BA",
+  "calibration_header_sha256": "AC8348C7CE950F80BA3D840B3750E0DF60FBEC8C1E1E85146ACF0C8E8D2DCEEF",
+  "generated_files_identical": {
+    "dcdc_step.c": true,
+    "dcdc_step.h": true,
+    "dcdc_step_types.h": true,
+    "rt_nonfinite.c": true,
+    "rt_nonfinite.h": true,
+    "rtGetInf.c": true,
+    "rtGetInf.h": true,
+    "rtGetNaN.c": true,
+    "rtGetNaN.h": true,
+    "rtwtypes.h": true
+  },
+  "alternative_sources_compiled_into_firmware": false,
+  "human_PI_knob_count": 4,
+  "archive_sha256": "36AE2BE2309EECD10FFC11704B263FD11C52101B7A472AFD2E483142E013D583",
+  "archive_unchanged": true,
+  "hardware_flashed": false,
+  "native_C_comparison": {
+    "samples": 20000,
+    "max_absolute_error": 0,
+    "states_equal": true,
+    "passed": true
+  },
+  "cycle_mean_current_error_percent": 0.6169896850695578,
+  "switching_display_error_percent": 0.6208200809317471,
+  "keil_errors": 0,
+  "keil_warnings": 0,
+  "measured_efficiency_available": false,
+  "bench_current_calibration_performed": false,
+  "extra_instant_step_passes_0p5V": true,
+  "transient_validation": {
+    "gains": {
+      "sample_time": 4.99882335e-05,
+      "current_kp": 0.02,
+      "current_ki": 8,
+      "voltage_kp": 10,
+      "voltage_ki": 120,
+      "current_slew": 40000,
+      "voltage_slew": 100,
+      "charge_limit": 2,
+      "discharge_limit": 2.5,
+      "overcurrent": 2.8,
+      "overcharge": 24,
+      "overcharge_release": 23,
+      "battery_min": 15,
+      "battery_max": 25,
+      "bus_max": 39,
+      "duty_min": 0.05,
+      "duty_max": 0.95,
+      "current_lead_time": 0.00015,
+      "current_ff_inductance": 0.000235
+    },
+    "hardware_timing": true,
+    "source_step_V": [
+      32,
+      38,
+      32
+    ],
+    "nominal_min_V": 29.556486472665345,
+    "nominal_max_V": 30.41716722260989,
+    "nominal_max_error_V": 0.4435135273346553,
+    "nominal_all_pass": true,
+    "nominal_max_settled_current_std_A": 0.020679276769500883,
+    "nominal_max_settled_ref_std_A": 0.053500599307431985,
+    "corner_all_pass": false,
+    "corner_max_error_V": 0.7636835237309789,
+    "worst_corner_switch_pass": false,
+    "worst_corner_switch_error_V": 0.7898223107688835,
+    "baseline_error_V": 1.4459881747831318,
+    "PI_only_error_V": 0.9876536341439568,
+    "rejected_Kpv14_current_std_A": 0.22515485396310836,
+    "rejected_Kpv14_ref_std_A": 0.551466686148376,
+    "all_ADC_inputs_quantized": true,
+    "hardware_flashed": false
+  }
+}
