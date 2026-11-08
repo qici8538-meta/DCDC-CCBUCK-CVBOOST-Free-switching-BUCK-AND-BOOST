@@ -35,7 +35,7 @@ typedef struct PI_CTRL_DATA_TAG
 /* Exported functions prototypes ---------------------------------------------*/
 float limit_value(float value, float low, float high);
 float pi_func(volatile PI_CTRL_DATA_DEF *pi, float ref, float fbk);
-/* 百分比调参的单电压环：内部乘ARR/100，并将Ki乘控制周期；Out仍为计数。 */
+/* 百分比PI：电压环输入V，电流环输入A；内部乘ARR/100及控制周期，Out仍为计数。 */
 float pi_func_percent(volatile PI_CTRL_DATA_DEF *pi, float ref, float fbk,
                       float arr, float sample_period_s);
 

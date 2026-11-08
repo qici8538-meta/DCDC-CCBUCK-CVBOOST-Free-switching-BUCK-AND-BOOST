@@ -13,9 +13,8 @@
 #include "tim.h"
 
 /* Private define ------------------------------------------------------------*/
-/* 唯一模式选择：0=单电流环，1=电压外环+电流内环，2=开环，3=单电压环。
-   断VIN后修改，Keil重新编译、下载并复位；不再通过RAM变量切换模式。 */
-#define BUCK_CONTROL_MODE 3U
+/* 模式在app_control.h选择；断VIN后修改并重新编译、下载。 */
+/* BUCK_CONTROL_MODE在app_control.h集中选择，LCD使用同一选择。 */
 #if (BUCK_CONTROL_MODE != 0U) && (BUCK_CONTROL_MODE != 1U) && \
     (BUCK_CONTROL_MODE != 2U) && (BUCK_CONTROL_MODE != 3U)
 #error "BUCK_CONTROL_MODE must be 0, 1, 2 or 3"
@@ -38,12 +37,16 @@ volatile float openloop_command;
 
 volatile uint8_t power_output_enabled; /* 仅反映实际输出状态，不是人工开关。 */
 static uint8_t control_fault_latched; /* 自动故障记忆，不是调试入口。 */
-static int8_t voltage_step_direction; /* 端点折返，保证每次按键最多变化1V。 */
+static int8_t current_step_direction;
+#if BUCK_CONTROL_MODE == 3U
+static int8_t voltage_step_direction;
+#endif
 
 /* Private function prototypes -----------------------------------------------*/
 static void BuckControl_DisableOutput(void);
 static void BuckControl_Stop(void);
 static uint8_t BuckControl_VoltageParametersValid(float arr);
+static uint8_t BuckControl_CurrentParametersValid(float arr);
 static uint8_t BuckControl_Finite(float value);
 
 /* Private functions ---------------------------------------------------------*/
@@ -95,6 +98,20 @@ static uint8_t BuckControl_VoltageParametersValid(float arr)
            (pwm_limit > 0.0f) && (pwm_limit <= arr);
 }
 
+/* v1.1.0 电流PI同样按占空比百分点调参，Ki单位为百分点/(A*s)。 */
+static uint8_t BuckControl_CurrentParametersValid(float arr)
+{
+    return BuckControl_Finite(current_reference) &&
+           (current_reference >= BUCK_CURRENT_TARGET_MIN_A - 0.0001f) &&
+           (current_reference <= BUCK_CURRENT_TARGET_MAX_A + 0.0001f) &&
+           BuckControl_Finite(current_pi.Kp) && (current_pi.Kp >= 0.0f) && (current_pi.Kp <= 100.0f) &&
+           BuckControl_Finite(current_pi.Ki) && (current_pi.Ki >= 0.0f) &&
+           (current_pi.Ki <= 100.0f / VOLTAGE_CONTROL_PERIOD_S) &&
+           BuckControl_Finite(current_pi.Kd) && (current_pi.Kd == 0.0f) &&
+           BuckControl_Finite(current_limit) && (current_limit > BUCK_CURRENT_TARGET_MAX_A) &&
+           (current_limit <= 3.2f) && (pwm_limit > 0.0f) && (pwm_limit <= 0.95f * arr);
+}
+
 /* Exported functions --------------------------------------------------------*/
 
 /**
@@ -111,12 +128,14 @@ void BuckControl_ParameterInit(void)
     voltage_pi.Umax = 6.0f;            /* 外环输出即电流给定上限 */
     voltage_pi.Umin = 0.0f;
     current_pi.Kp = 1.0f;
-    current_pi.Ki = 0.001f;
+    current_pi.Ki = (BUCK_CONTROL_MODE == 0U) ? 20.0f : 0.001f;
+    /* 模式0：Kp=1百分点/A、Ki=20百分点/(A*s)，仅为人工整定起点。
+       模式1仍保留原每拍计数增益，双环留待v1.2.0验证。 */
     current_pi.Kd = 0.0f;
     current_pi.Umax = arr;             /* 原 4199.0f（原 ARR），改为当前实际 ARR */
     current_pi.Umin = 0.0f;
-    current_limit = 6.6f;
-    pwm_limit = arr;                   /* PWM 比较值上限 = 当前实际 ARR */
+    current_limit = (BUCK_CONTROL_MODE == 0U) ? 3.2f : 6.6f;
+    pwm_limit = (BUCK_CONTROL_MODE == 0U) ? 0.95f * arr : arr;                   /* PWM 比较值上限 = 当前实际 ARR */
 
     /* 单电压环按占空比百分比调参，不用人工乘ARR。
        Kp=1：每差1V，比例项贡献1个百分点占空比。  0.5-2
@@ -131,7 +150,10 @@ void BuckControl_ParameterInit(void)
 
     openloop_command = 0.3f * arr;    /* MANUAL_DUTY: 5%, then 10% for polarity test. */
     voltage_reference = MANUAL_TARGET_VOLTAGE;
+#if BUCK_CONTROL_MODE == 3U
     voltage_step_direction = 1;
+#endif
+    current_step_direction = 1;
     current_reference = 0.0f; /* Mode 0: 0A停PWM，正给定开始。 */
 
     voltage_pi.Out = 0.0f;
@@ -147,14 +169,31 @@ void BuckControl_ParameterInit(void)
     control_fault_latched = 0U;
 }
 
-/* 主循环中每个已消抖的按下事件调用一次。其他模式不响应电压按键。
-   2->3->...->9->10->9->...->3->2；端点不跳回，积分也不因换档清零。 */
+/* 每个消抖按下事件调一次；模式0调电流、模式3调电压，端点折返。 */
 void BuckControl_KeyPressed(void)
 {
     float target;
 
-    if (BUCK_CONTROL_MODE != 3U)
+#if BUCK_CONTROL_MODE == 0U
+    {
+        target = current_reference;
+        if (!BuckControl_Finite(target) || (target < BUCK_CURRENT_TARGET_MIN_A - 0.0001f) ||
+            (target > BUCK_CURRENT_TARGET_MAX_A + 0.0001f))
+        {
+            current_step_direction = 1;
+            current_reference = BUCK_CURRENT_TARGET_MIN_A;
+            return;
+        }
+        if (target >= BUCK_CURRENT_TARGET_MAX_A - 0.0001f)
+            current_step_direction = -1;
+        else if (target <= BUCK_CURRENT_TARGET_MIN_A + 0.0001f)
+            current_step_direction = 1;
+        current_reference = limit_value(target + (float)current_step_direction *
+                                       BUCK_CURRENT_TARGET_STEP_A,
+                                       BUCK_CURRENT_TARGET_MIN_A, BUCK_CURRENT_TARGET_MAX_A);
         return;
+    }
+#elif BUCK_CONTROL_MODE == 3U
 
     target = voltage_reference;
     /* 人工写0停机后，按一次从2V重新开始；异常给定也恢复到下限。 */
@@ -173,6 +212,9 @@ void BuckControl_KeyPressed(void)
     voltage_reference = limit_value(target + (float)voltage_step_direction *
                                    BUCK_VOLTAGE_TARGET_STEP_V,
                                    BUCK_VOLTAGE_TARGET_MIN_V, BUCK_VOLTAGE_TARGET_MAX_V);
+#else
+    (void)target;
+#endif
 }
 
 /**
@@ -271,14 +313,18 @@ void BuckControl_TimerElapsed(TIM_HandleTypeDef *htim)
         if (((BUCK_CONTROL_MODE == 3U) &&
              !BuckControl_VoltageParametersValid((float)__HAL_TIM_GET_AUTORELOAD(htim))) ||
             ((BUCK_CONTROL_MODE == 1U) && !BuckControl_Finite(voltage_reference)) ||
-            ((BUCK_CONTROL_MODE == 0U) && !BuckControl_Finite(current_reference)))
+            ((BUCK_CONTROL_MODE == 0U) &&
+             !BuckControl_CurrentParametersValid((float)__HAL_TIM_GET_AUTORELOAD(htim))))
         {
             BuckControl_Stop();
             return;
         }
 
-        /* 只保留ADC饱和关断；已取消按输出电压阈值关断的OVP。 */
-        if ((voltage_raw >= 4090U) ||
+        /* 模式0保留20V电阻负载测试上限；其他模式仍沿用原保护。 */
+        if (((BUCK_CONTROL_MODE == 0U) &&
+             ((voltage >= BUCK_CURRENT_VOLTAGE_MAX_V) || (adc_current_raw >= 4090U) ||
+              !BuckControl_Finite(current) || !BuckControl_Finite(voltage))) ||
+            (voltage_raw >= 4090U) ||
             ((BUCK_CONTROL_MODE != 3U) && (current >= current_limit)))
             control_fault_latched = 1U;
         if (control_fault_latched != 0U)
@@ -318,7 +364,12 @@ void BuckControl_TimerElapsed(TIM_HandleTypeDef *htim)
             }
             //BUCK_CONTROL_MODE 为0/1时，共用的电流内环部分
             target = limit_value(target, 0.0f, current_limit);
-            command = limit_value(pi_func(&current_pi, target, current), 0.0f, maximum);
+            current_pi.Umax = maximum;
+            command = (BUCK_CONTROL_MODE == 0U) ?
+                      pi_func_percent(&current_pi, target, current,
+                                      (float)__HAL_TIM_GET_AUTORELOAD(htim), VOLTAGE_CONTROL_PERIOD_S) :
+                      pi_func(&current_pi, target, current);
+            command = limit_value(command, 0.0f, maximum);
         }
         if ((adc_error_count != 0U) || (adc_frame_count == 0U))
         {

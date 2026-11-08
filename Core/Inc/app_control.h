@@ -19,9 +19,16 @@ extern "C" {
 #include "app_adc.h"
 
 /* Exported variables --------------------------------------------------------*/
-/* 模式仅在 app_control.c 顶部 BUCK_CONTROL_MODE 宏选择，无运行时模式/启停标志。 */
+/* 编译选择：0单电流环，1双环，2开环，3单电压环。 */
+#define BUCK_CONTROL_MODE 0U
 
 /* 单电压环按键目标范围；0V另作人工停机命令。 */
+/* v1.1.0 单电流环：0A停机；首次按键0.2A，端点折返。 */
+#define BUCK_CURRENT_TARGET_MIN_A  0.2f
+#define BUCK_CURRENT_TARGET_MAX_A  3.0f
+#define BUCK_CURRENT_TARGET_STEP_A 0.1f
+#define BUCK_CURRENT_VOLTAGE_MAX_V 20.0f /* 30V输入、0~5Ω电阻验证用 */
+
 #define BUCK_VOLTAGE_TARGET_MIN_V  2.0f
 #define BUCK_VOLTAGE_TARGET_MAX_V  10.0f
 #define BUCK_VOLTAGE_TARGET_STEP_V 1.0f

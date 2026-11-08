@@ -139,8 +139,8 @@ void AppLcd_Init(void)
   LCD_Command(0x11U, 0, 0U);
   HAL_Delay(120U);
   LCD_Clear();
-  LCD_Text(64U, 52U, "TARGET VOLTAGE", &LCD_Font16, 1U, LCD_WHITE);
-  LCD_Text(40U, 228U, "KEY: 2-10V / 1V STEP", &LCD_Font16, 1U, LCD_WHITE);
+  LCD_Text(64U, 52U, (BUCK_CONTROL_MODE == 0U) ? "TARGET CURRENT" : "TARGET VOLTAGE", &LCD_Font16, 1U, LCD_WHITE);
+  LCD_Text(40U, 228U, (BUCK_CONTROL_MODE == 0U) ? "KEY: 0.2-3A / 0.1A" : "KEY: 2-10V / 1V STEP", &LCD_Font16, 1U, LCD_WHITE);
   AppLcd_Update();
   LCD_Command(0x29U, 0, 0U);
   if (lcd_ready)
@@ -156,9 +156,10 @@ void AppLcd_Update(void)
   if (!lcd_ready || ((uint32_t)(now - lcd_last_poll) < LCD_REFRESH_MS))
     return;
   lcd_last_poll = now;
-  target.value = voltage_reference; /* Same target used by the voltage PI. */
+  target.value = (BUCK_CONTROL_MODE == 0U) ? current_reference : voltage_reference;
+  if (BUCK_CONTROL_MODE == 0U) value[6] = 'A';
   if (((target.bits & 0x7F800000U) != 0x7F800000U) &&
-      (target.value >= 0.0f) && (target.value <= BUCK_VOLTAGE_TARGET_MAX_V))
+      (target.value >= 0.0f) && (target.value <= ((BUCK_CONTROL_MODE == 0U) ? BUCK_CURRENT_TARGET_MAX_A : BUCK_VOLTAGE_TARGET_MAX_V)))
   {
     centivolts = (int32_t)(target.value * 100.0f + 0.5f);
     value[0] = (centivolts >= 1000) ? (char)('0' + centivolts / 1000) : ' ';

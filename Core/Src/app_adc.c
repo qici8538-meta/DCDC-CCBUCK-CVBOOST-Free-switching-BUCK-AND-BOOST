@@ -12,7 +12,7 @@
 #define ADC_REFERENCE_VOLTAGE 3.3f
 #define ADC_FULL_SCALE        4095.0f
 #define VOLTAGE_SENSOR_RATIO  15.0f
-#define CURRENT_SENSOR_RATIO  2.0f
+#define CURRENT_SENSOR_RATIO  ADC_CURRENT_A_PER_PIN_V
 #define ADC_AVERAGE_ALPHA     0.05f
 
 /* 扫描顺序决定位置：Rank1/PA0 -> [0]；Rank2/PA1 -> [1]。 */
@@ -24,6 +24,7 @@ volatile float adc_current_raw_avg;
 volatile float adc_voltage_raw_avg;//
 volatile float adc_voltage_pin;//
 volatile float buck_current;
+volatile float buck_current_avg; /* 仅用于观察稳态，PI和过流仍用当前帧。 */
 volatile float buck_voltage;
 volatile float buck_voltage_avg;////
 volatile uint32_t adc_frame_count;//
@@ -35,7 +36,7 @@ void BuckAdc_Start(void)
     adc_error_count = 0U;
     adc_current_raw = adc_voltage_raw = 0U;
     adc_current_raw_avg = adc_voltage_raw_avg = 0.0f;
-    adc_voltage_pin = buck_current = buck_voltage = buck_voltage_avg = 0.0f;
+    adc_voltage_pin = buck_current = buck_current_avg = buck_voltage = buck_voltage_avg = 0.0f;
 
     /* 通道、采样时间、TIM1触发、DMA循环模式都在adc.c里看。 */
     MX_ADC1_Init();
@@ -87,6 +88,8 @@ void BuckAdc_ConversionComplete(ADC_HandleTypeDef *hadc)
     /* D. 保留原来的零点扣除、3.3V参考、15倍电压及2倍电流换算。 */
     buck_current = ((float)current_raw - ADC_CURRENT_ZERO_RAW) *
                    (ADC_REFERENCE_VOLTAGE / ADC_FULL_SCALE) * CURRENT_SENSOR_RATIO;
+    buck_current_avg = (adc_current_raw_avg - ADC_CURRENT_ZERO_RAW) *
+                       (ADC_REFERENCE_VOLTAGE / ADC_FULL_SCALE) * CURRENT_SENSOR_RATIO;
     buck_voltage = ((float)voltage_raw - ADC_VOLTAGE_ZERO_RAW) *
                    (ADC_REFERENCE_VOLTAGE / ADC_FULL_SCALE) * VOLTAGE_SENSOR_RATIO;
     buck_voltage_avg = (adc_voltage_raw_avg - ADC_VOLTAGE_ZERO_RAW) *

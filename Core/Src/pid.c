@@ -66,7 +66,7 @@ float pi_func(volatile PI_CTRL_DATA_DEF *pi, float ref, float fbk)
     return pi_calculate(pi, ref, fbk, pi->Kp, pi->Ki, pi->Kd);
 }
 
-/* 仅单电压环使用此入口。Kp/Ki保留人输入的数值，不在RAM中覆盖它们。 */
+/* 单电压环、v1.1.0单电流环共用。Kp/Ki保留人工输入单位。 */
 float pi_func_percent(volatile PI_CTRL_DATA_DEF *pi, float ref, float fbk,
                       float arr, float sample_period_s)
 {

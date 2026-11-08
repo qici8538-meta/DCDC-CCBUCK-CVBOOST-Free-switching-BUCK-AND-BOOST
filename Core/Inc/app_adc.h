@@ -10,6 +10,7 @@ extern volatile float adc_current_raw_avg;
 extern volatile float adc_voltage_raw_avg;
 extern volatile float adc_voltage_pin; /* PA1引脚电压(V)，未扣零点、未乘15。 */
 extern volatile float buck_current;
+extern volatile float buck_current_avg; /* 平滑电流(A)，仅观察，不增加控制延迟。 */
 extern volatile float buck_voltage;     /* 当前帧电压，PI使用。 */
 extern volatile float buck_voltage_avg; /* 均值换算电压，画图使用。 */
 
